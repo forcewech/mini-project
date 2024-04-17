@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Author {
+export class Book {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -9,9 +9,12 @@ export class Author {
   name: string;
 
   @Column()
-  age: number;
+  publish: string;
 
-  constructor(author: Partial<Author>) {
-    Object.assign(this, author);
+  @Column()
+  price: number;
+
+  constructor(book: Partial<Book>) {
+    Object.assign(this, book);
   }
 }
