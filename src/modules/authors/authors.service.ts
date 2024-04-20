@@ -1,39 +1,35 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 import { CreateAuthorDto } from "./dto/create-author.dto";
 import { UpdateAuthorDto } from "./dto/update-author.dto";
-import { EntityManager, Repository } from "typeorm";
 import { Author } from "./entities/author.entity";
-import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class AuthorsService {
   constructor(
     @InjectRepository(Author)
-    private authorRepository: Repository<Author>,
-    private readonly entityManager: EntityManager
+    private authorRepository: Repository<Author>
   ) {}
-  async create(createAuthorDto: CreateAuthorDto) {
+  async create(createAuthorDto: CreateAuthorDto): Promise<Author> {
     const author = new Author(createAuthorDto);
-    await this.entityManager.save(author);
+    return await this.authorRepository.save(author);
   }
 
-  async findAll() {
+  async findAll(): Promise<Author[]> {
     return this.authorRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Author> {
     return this.authorRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateAuthorDto: UpdateAuthorDto) {
-    const author = await this.authorRepository.findOneBy({ id });
-    return await this.authorRepository.save({
-      ...author,
-      ...updateAuthorDto
-    });
+  async update(id: number, updateAuthorDto: UpdateAuthorDto): Promise<Author> {
+    await this.authorRepository.update(id, updateAuthorDto);
+    return this.authorRepository.findOneBy({ id });
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     await this.authorRepository.delete(id);
   }
 }
