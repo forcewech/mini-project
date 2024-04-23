@@ -9,7 +9,7 @@ export class AuthorsService {
   constructor(private authorRepository: AuthorsRepository) {}
   async create(createAuthorDto: CreateAuthorDto): Promise<Author> {
     const author = new Author(createAuthorDto);
-    return await this.authorRepository.save(author);
+    return this.authorRepository.save(author);
   }
 
   async findAll(): Promise<Author[]> {
@@ -26,6 +26,6 @@ export class AuthorsService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.authorRepository.delete(id);
+    this.authorRepository.delete(id);
   }
 }

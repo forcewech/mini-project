@@ -1,17 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { BooksRepository } from "./books.repository";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { UpdateBookDto } from "./dto/update-book.dto";
 import { Book } from "./entities/book.entity";
-import { BooksRepository } from "./books.repository";
 
 @Injectable()
 export class BooksService {
   constructor(private bookRepository: BooksRepository) {}
   async create(createBookDto: CreateBookDto): Promise<Book> {
     const book = new Book(createBookDto);
-    return await this.bookRepository.save(book);
+    return this.bookRepository.save(book);
   }
 
   async findAll(): Promise<Book[]> {
@@ -28,6 +26,6 @@ export class BooksService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.bookRepository.delete(id);
+    this.bookRepository.delete(id);
   }
 }

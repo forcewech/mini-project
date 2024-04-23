@@ -14,13 +14,12 @@ import {
       useFactory: () => ({
         type: "postgres",
         host: POSTGRES_HOST,
-        port: +POSTGRES_PORT,
+        port: POSTGRES_PORT,
         database: POSTGRES_DATABASE,
         username: POSTGRES_USERNAME,
         password: POSTGRES_PASSWORD,
         entities: [],
-        autoLoadEntities: true,
-        synchronize: true
+        autoLoadEntities: true
       })
     })
   ]
