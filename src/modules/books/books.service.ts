@@ -4,13 +4,11 @@ import { Repository } from "typeorm";
 import { CreateBookDto } from "./dto/create-book.dto";
 import { UpdateBookDto } from "./dto/update-book.dto";
 import { Book } from "./entities/book.entity";
+import { BooksRepository } from "./books.repository";
 
 @Injectable()
 export class BooksService {
-  constructor(
-    @InjectRepository(Book)
-    private bookRepository: Repository<Book>
-  ) {}
+  constructor(private bookRepository: BooksRepository) {}
   async create(createBookDto: CreateBookDto): Promise<Book> {
     const book = new Book(createBookDto);
     return await this.bookRepository.save(book);
