@@ -26,6 +26,6 @@ export class AuthorsService {
   }
 
   async remove(id: number): Promise<void> {
-    this.authorRepository.delete(id);
+    await this.authorRepository.delete(id);
   }
 }
